@@ -29,3 +29,25 @@ class MolecularFormulaCalculator:
         except Exception as e:
             logger.error(f"Błąd podczas obliczania wzoru sumarycznego: {e}")
             return None
+
+    @staticmethod
+    def mass_from_smiles(mol: Chem.Mol) -> float | None:
+        try:
+            mollar_mass = Chem.rdMolDescriptors.CalcExactMolWt(mol)
+            logger.info(f"Masa molowa: {mollar_mass}")
+            return mollar_mass
+        except Exception as e:
+            logger.error(f"Błąd podczas obliczania wzoru sumarycznego: {e}")
+            return None
+
+    @staticmethod
+    def is_ring(mol: Chem.Mol) -> int | None:
+        try:
+            ring = mol.GetRingInfo().NumRings()
+            if ring == 0:
+                return 1
+            else:
+                return 0
+        except Exception as e:
+            logger.error(f"Błąd podczas sprawdzania pierścieni: {e}")
+            return None
